@@ -18,13 +18,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MainActivity extends AppCompatActivity {
 
-    String url ="http://opendata.paris.fr/api/records/1.0/search?dataset=abri-voyageurs-ecrans-tactiles-connectes&facet=code_postal";
+    String url ="http://opendata.paris.fr/api/records/1.0/search?dataset=abri-voyageurs-ecrans-tactiles-connectes&rows=78";
 
     private ListView listViewShelters;
     private ListAdapter listAdapter;
