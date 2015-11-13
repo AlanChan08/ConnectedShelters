@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,12 +26,20 @@ public class MainActivity extends AppCompatActivity {
 
     String url ="http://opendata.paris.fr/api/records/1.0/search?dataset=abri-voyageurs-ecrans-tactiles-connectes&facet=code_postal";
 
+    private ListView listViewShelters;
+    private ListAdapter listAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final TextView mTextView = (TextView) findViewById(R.id.tv1);
+
+        setContentView(R.layout.list_view);
+
+        //final TextView mTextView = (TextView) findViewById(R.id.tv1);
+        listViewShelters = (ListView) findViewById(R.id.lv1);
+
+
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -41,8 +51,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Shelters shelters = objectMapper.readValue(response, new TypeReference<Shelters>(){});
-                            mTextView.setText(""+shelters);
+                            //We put all the data from the api in shelter
+                            Shelters shelter = objectMapper.readValue(response, new TypeReference<Shelters>(){});
+                            //mTextView.setText(""+shelter); //show our data from our api.
+
+                            //here the adapter will get our record and put it in our listview
+                            listAdapter = new com.ac.alan.connectedshelters.ListAdapter(MainActivity.this, shelter.getRecords());
+                            listViewShelters.setAdapter(listAdapter);
                         }
                         catch (IOException e) {
                             e.printStackTrace();

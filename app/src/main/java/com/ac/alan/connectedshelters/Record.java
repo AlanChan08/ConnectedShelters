@@ -27,7 +27,7 @@ public class Record {
                 '}';
     }
 
-    private class Fields {
+    public class Fields {
 
         private String adresse;
         private String code_postal;
