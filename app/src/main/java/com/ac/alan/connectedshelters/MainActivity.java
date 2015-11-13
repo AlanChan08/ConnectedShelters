@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listViewShelters;
     private ListAdapter listAdapter;
-
+    private String shelterAdress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +64,13 @@ public class MainActivity extends AppCompatActivity {
                             listViewShelters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Record currentRecord = (Record) listAdapter.getItem(position);
                                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                                    intent.putExtra(Tag.TAG_SHELTER_ADRESS,currentRecord.getFields().getAdresse());
+                                    intent.putExtra(Tag.TAG_SHELTER_X, (currentRecord.getFields().getXy())[0]);
+                                    intent.putExtra(Tag.TAG_SHELTER_Y, (currentRecord.getFields().getXy())[1]);
                                     startActivity(intent);
+
 
                                 }
 
