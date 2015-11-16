@@ -1,17 +1,18 @@
 package com.ac.alan.connectedshelters;
-
+import org.json.JSONObject;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
-
+import java.util.HashMap;
 import android.content.IntentSender;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import android.os.AsyncTask;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -26,10 +27,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import java.util.ArrayList;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -43,6 +47,8 @@ public class MapsActivity extends FragmentActivity implements
     private GoogleMap mMap;
     double shelterX;
     double shelterY;
+    double currentLatitude;
+    double currentLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,16 +98,26 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     private void handleNewLocation(Location location) {
-        double currentLatitude = location.getLatitude();
-        double currentLongitude = location.getLongitude();
+
+        currentLatitude = location.getLatitude();
+        currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude)).title("Current Location"));
-//        MarkerOptions options = new MarkerOptions()
-//                .position(latLng)
-//                .title("I am here!");
-//        mMap.addMarker(options);
+
+        shelterX = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_X);
+        shelterY = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_Y);
+        LatLng destinationlatlng = new LatLng(shelterX, shelterY);
+        Log.d("***********Transfert", shelterX + " " + shelterY);
+
+        mMap.addMarker(new MarkerOptions().position(new LatLng(shelterX, shelterY)).title("Destination"));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(shelterX, shelterY), 13.0f));
+
+
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title("I am here!!!!!");
+        mMap.addMarker(options);
         Log.d(TAG, location.toString());
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.addPolyline(new PolylineOptions().add(destinationlatlng, latLng).width(5).color(Color.BLUE));
     }
 
     @Override
@@ -144,13 +160,5 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     private void setUpMap() {
-        shelterX = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_X);
-        shelterY = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_Y);
-        Log.d("***********Transfert", shelterX + " " + shelterY);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(shelterX, shelterY)).title("Destination"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(shelterX, shelterY), 13.0f));
-
-
     }
-
 }
