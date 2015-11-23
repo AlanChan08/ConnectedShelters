@@ -35,7 +35,6 @@ public class ListAdapter extends ArrayAdapter {
             convertView = mInflater.inflate(R.layout.list_view__shelter_item,parent,false);
             holder = new ViewHolder();
 
-            // ** CHANGE HERE ** //
             // we do the mapping with our xml textviews already define in part 2)
             holder.element1 = (TextView) convertView.findViewById(R.id.shelterAdress);
             holder.element2 =(TextView) convertView.findViewById(R.id.shelterPostalCode);

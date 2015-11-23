@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             //We put all the data from the api in shelter
-                            Shelters shelter = objectMapper.readValue(response, new TypeReference<Shelters>(){});
+                            final Shelters shelter = objectMapper.readValue(response, new TypeReference<Shelters>(){});
+                            Storage.all_shelter = shelter;
                             //mTextView.setText(""+shelter); //show our data from our api.
 
                             //here the adapter will get our record and put it in our listview
@@ -64,12 +65,16 @@ public class MainActivity extends AppCompatActivity {
                             listViewShelters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Record currentRecord = (Record) listAdapter.getItem(position);
+
+//                                    Record currentRecord = (Record) listAdapter.getItem(position);
                                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                                    intent.putExtra(Tag.TAG_SHELTER_ADRESS,currentRecord.getFields().getAdresse());
-                                    intent.putExtra(Tag.TAG_SHELTER_X, (currentRecord.getFields().getXy())[0]);
-                                    intent.putExtra(Tag.TAG_SHELTER_Y, (currentRecord.getFields().getXy())[1]);
+//                                    intent.putExtra(Tag.TAG_SHELTER_ADRESS,currentRecord.getFields().getAdresse());
+//                                    intent.putExtra(Tag.TAG_SHELTER_X, (currentRecord.getFields().getXy())[0]);
+//                                    intent.putExtra(Tag.TAG_SHELTER_Y, (currentRecord.getFields().getXy())[1]);
                                     startActivity(intent);
+
+
+
 
 
                                 }

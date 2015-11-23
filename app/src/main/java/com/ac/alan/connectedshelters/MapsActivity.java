@@ -10,6 +10,7 @@ import android.content.IntentSender;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.os.AsyncTask;
@@ -103,21 +104,36 @@ public class MapsActivity extends FragmentActivity implements
         currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
 
-        shelterX = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_X);
-        shelterY = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_Y);
-        LatLng destinationlatlng = new LatLng(shelterX, shelterY);
-        Log.d("***********Transfert", shelterX + " " + shelterY);
-
-        mMap.addMarker(new MarkerOptions().position(new LatLng(shelterX, shelterY)).title("Destination"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(shelterX, shelterY), 13.0f));
+//        shelterX = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_X);
+//        shelterY = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_Y);
+//        LatLng destinationlatlng = new LatLng(shelterX, shelterY);
+//        Log.d("***********Transfert", shelterX + " " + shelterY);
 
 
-        MarkerOptions options = new MarkerOptions()
-                .position(latLng)
-                .title("I am here!!!!!");
+
+        Shelters shelters = Storage.all_shelter;
+        for(Record record : shelters.getRecords())
+        {
+            double latitude = record.getFields().getXy()[0];
+            double longitude = record.getFields().getXy()[1];
+            String title = record.getFields().getAdresse();
+            // create marker
+            MarkerOptions marker = new MarkerOptions().position(
+                    new LatLng(latitude, longitude)).title(title);
+
+            mMap.addMarker(marker);
+        }
+
+
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(shelterX, shelterY)).title("Destination"));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f));
+
+
+        MarkerOptions options = new MarkerOptions().position(latLng).title("I am here!!!!!");
         mMap.addMarker(options);
         Log.d(TAG, location.toString());
-        mMap.addPolyline(new PolylineOptions().add(destinationlatlng, latLng).width(5).color(Color.BLUE));
+//        mMap.addPolyline(new PolylineOptions().add(destinationlatlng, latLng).width(5).color(Color.BLUE));
+        mMap.addCircle(new CircleOptions().center(latLng).radius(1000).fillColor(0x5587cefa).strokeColor(Color.TRANSPARENT));
     }
 
     @Override
