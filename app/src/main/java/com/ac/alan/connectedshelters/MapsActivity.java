@@ -106,6 +106,12 @@ public class MapsActivity extends FragmentActivity implements
 
         /////
 
+        MarkerOptions options = new MarkerOptions().position(latLng).title("I am here!!!!!");
+        mMap.addMarker(options);
+        Log.d(TAG, location.toString());
+//        mMap.addPolyline(new PolylineOptions().add(destinationlatlng, latLng).width(5).color(Color.BLUE));
+        mMap.addCircle(new CircleOptions().center(latLng).radius(1000).fillColor(0x5587cefa).strokeColor(Color.TRANSPARENT));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(shelterX, shelterY)).title("Destination"));
 
         if(getIntent().getExtras() != null) {
             String shelterAdress = getIntent().getExtras().getString(Tag.TAG_SHELTER_ADRESS);
@@ -115,6 +121,7 @@ public class MapsActivity extends FragmentActivity implements
             Log.d("***********Transfert", shelterX + " " + shelterY);
             MarkerOptions marker = new MarkerOptions().position(destinationlatlng).title(shelterAdress);
             mMap.addMarker(marker);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destinationlatlng, 13.0f));
         }
         else{
             Shelters shelters = Storage.all_shelter;
@@ -128,24 +135,12 @@ public class MapsActivity extends FragmentActivity implements
                         new LatLng(latitude, longitude)).title(title);
 
                 mMap.addMarker(marker);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f));
             }
 
         }
 
 
-
-
-
-
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(shelterX, shelterY)).title("Destination"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f));
-
-
-        MarkerOptions options = new MarkerOptions().position(latLng).title("I am here!!!!!");
-        mMap.addMarker(options);
-        Log.d(TAG, location.toString());
-//        mMap.addPolyline(new PolylineOptions().add(destinationlatlng, latLng).width(5).color(Color.BLUE));
-        mMap.addCircle(new CircleOptions().center(latLng).radius(1000).fillColor(0x5587cefa).strokeColor(Color.TRANSPARENT));
     }
 
     @Override

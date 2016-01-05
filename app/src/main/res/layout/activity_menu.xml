@@ -15,14 +15,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List all"
+        android:text="List all Shelters"
         android:id="@+id/button"
         android:onClick="onButtonTapped" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show map"
+        android:text="Show on map"
         android:id="@+id/button3"
         android:onClick="onButtonTapped" />
 
