@@ -104,25 +104,37 @@ public class MapsActivity extends FragmentActivity implements
         currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
 
-//        shelterX = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_X);
-//        shelterY = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_Y);
-//        LatLng destinationlatlng = new LatLng(shelterX, shelterY);
-//        Log.d("***********Transfert", shelterX + " " + shelterY);
+        /////
 
 
-
-        Shelters shelters = Storage.all_shelter;
-        for(Record record : shelters.getRecords())
-        {
-            double latitude = record.getFields().getXy()[0];
-            double longitude = record.getFields().getXy()[1];
-            String title = record.getFields().getAdresse();
-            // create marker
-            MarkerOptions marker = new MarkerOptions().position(
-                    new LatLng(latitude, longitude)).title(title);
-
+        if(getIntent().getExtras() != null) {
+            String shelterAdress = getIntent().getExtras().getString(Tag.TAG_SHELTER_ADRESS);
+            shelterX = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_X);
+            shelterY = getIntent().getExtras().getDouble(Tag.TAG_SHELTER_Y);
+            LatLng destinationlatlng = new LatLng(shelterX, shelterY);
+            Log.d("***********Transfert", shelterX + " " + shelterY);
+            MarkerOptions marker = new MarkerOptions().position(destinationlatlng).title(shelterAdress);
             mMap.addMarker(marker);
         }
+        else{
+            Shelters shelters = Storage.all_shelter;
+            for(Record record : shelters.getRecords())
+            {
+                double latitude = record.getFields().getXy()[0];
+                double longitude = record.getFields().getXy()[1];
+                String title = record.getFields().getAdresse();
+                // create marker
+                MarkerOptions marker = new MarkerOptions().position(
+                        new LatLng(latitude, longitude)).title(title);
+
+                mMap.addMarker(marker);
+            }
+
+        }
+
+
+
+
 
 
 //        mMap.addMarker(new MarkerOptions().position(new LatLng(shelterX, shelterY)).title("Destination"));

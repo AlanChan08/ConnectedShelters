@@ -12,11 +12,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/public64"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".MenuActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +35,14 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="List" >
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="About" >
         </activity>
     </application>
 

@@ -2,12 +2,14 @@ package com.ac.alan.connectedshelters;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ListAdapter listAdapter;
     private String shelterAdress;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
         //final TextView mTextView = (TextView) findViewById(R.id.tv1);
         listViewShelters = (ListView) findViewById(R.id.lv1);
-
 
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -66,16 +68,12 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                                    Record currentRecord = (Record) listAdapter.getItem(position);
+                                    Record currentRecord = (Record) listAdapter.getItem(position);
                                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-//                                    intent.putExtra(Tag.TAG_SHELTER_ADRESS,currentRecord.getFields().getAdresse());
-//                                    intent.putExtra(Tag.TAG_SHELTER_X, (currentRecord.getFields().getXy())[0]);
-//                                    intent.putExtra(Tag.TAG_SHELTER_Y, (currentRecord.getFields().getXy())[1]);
+                                    intent.putExtra(Tag.TAG_SHELTER_ADRESS,currentRecord.getFields().getAdresse());
+                                    intent.putExtra(Tag.TAG_SHELTER_X, (currentRecord.getFields().getXy())[0]);
+                                    intent.putExtra(Tag.TAG_SHELTER_Y, (currentRecord.getFields().getXy())[1]);
                                     startActivity(intent);
-
-
-
-
 
                                 }
 
@@ -97,9 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
+
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
